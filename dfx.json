@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "danktoken_backend": {
+      "main": "src/danktoken_backend/main.mo",
+      "type": "motoko"
+    },
+    "danktoken_frontend": {
+      "dependencies": [
+        "danktoken_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/danktoken_frontend/src/index.html"
+      },
+      "source": [
+        "src/danktoken_frontend/assets",
+        "dist/danktoken_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
