@@ -1,3 +1,9 @@
+Check Out this App Live On Internet Computer Network : 
+
+https://gn3qs-vqaaa-aaaam-ab7fa-cai.icp0.io/
+
+
+
 # Check your Balance
 
 1. Find out your principal id:
@@ -83,3 +89,5 @@ dfx canister --network ic id token_assets
 ```
 7. Copy the id from step 6 and add .raw.ic0.app to the end to form a URL.
 e.g. gn3qs-vqaaa-aaaam-ab7fa-cai.raw.ic0.app
+
+
