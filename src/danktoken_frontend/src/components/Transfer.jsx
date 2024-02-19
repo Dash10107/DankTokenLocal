@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { danktoken_backend } from "../../../declarations/danktoken_backend/";
+import {canisterId,createActor } from "../../../declarations/danktoken_backend/";
 import {Principal} from "@dfinity/principal";
-
+import {AuthClient} from "@dfinity/auth-client";
 
 function Transfer() {
 
@@ -13,9 +13,20 @@ function Transfer() {
   async function handleClick() {
     setDisabled(true);
     setHidden(true);
+
+    const authClient = await AuthClient.create();
+    const identity = await authClient.getIdentity();
+
+    const authenticatedCanister = createActor(canisterId,{
+      agentOptions:{
+        identity,
+      },
+    });
+
+
     const recipient = Principal.fromText(recipientId);
     const amountToTransfer = Number(amount);
-  const result =   await danktoken_backend.transfer(recipient,amountToTransfer);
+  const result =   await authenticatedCanister.transfer(recipient,amountToTransfer);
   setFeedback(result);
   setHidden(false);  
   setDisabled(false);

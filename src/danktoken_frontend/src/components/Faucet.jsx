@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { danktoken_backend } from "../../../declarations/danktoken_backend";
+import {canisterId,createActor } from "../../../declarations/danktoken_backend";
+import {AuthClient} from "@dfinity/auth-client";
 
-function Faucet() {
+function Faucet({userPrincipal}) {
 
   const [isDisabled,setDisabled] = useState(false);
   const [btnText,setText]=useState("Gimme gimme")
   async function handleClick(event) {
     setDisabled(true);
-   const result =  await danktoken_backend.payOut();
+
+    const authClient = await AuthClient.create();
+    const identity = await authClient.getIdentity();
+
+    const authenticatedCanister = createActor(canisterId,{
+      agentOptions:{
+        identity,
+      },
+    });
+
+   const result =  await authenticatedCanister.payOut();
    setText(result);
   }
 
@@ -19,7 +30,7 @@ function Faucet() {
         </span>
         Faucet
       </h2>
-      <label>Get your free DAngela tokens here! Claim 10,000 DANG coins to your account.</label>
+      <label>Get your free DAngela tokens here! Claim 10,000 DANG coins to your account with id {userPrincipal}. </label>
       <p className="trade-buttons">
         <button id="btn-payout" onClick={handleClick} disabled={isDisabled}>
           {btnText}

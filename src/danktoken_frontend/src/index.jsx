@@ -5,26 +5,31 @@ import {AuthClient} from "@dfinity/auth-client";
 
 const init = async () => { 
   
-//   const authClient = await AuthClient.create();
+  const authClient = await AuthClient.create();
 
-//     if(await authClient.isAuthenticated()){
-//       handleAuthenticated(authClient);
-//     }else{
-//       await authClient.login({
-//         identityProvider:"https://identity.ic0.app/#authorize",
-//         onSuccess:()=>{
-//           handleAuthenticated(authClient);
-//         }
-//       })
-//     }
+    if(await authClient.isAuthenticated()){
+      handleAuthenticated(authClient);
+    }else{
+      await authClient.login({
+        identityProvider:"https://identity.ic0.app/#authorize",
+        onSuccess:()=>{
+          handleAuthenticated(authClient);
+        }
+      })
+    }
 
 
 
-// async function handleAuthenticated (authClient){
-//   ReactDOM.render(<App />, document.getElementById("root"));
+async function handleAuthenticated (authClient){
+  console.log(authClient.getIdentity());
+  const identity = await authClient.getIdentity();
+  const userPrincipal = identity._principal.toString();
+  console.log('User PRincipal',userPrincipal);
+  
+  ReactDOM.render(<App loggedInPrincipal ={userPrincipal} />, document.getElementById("root"));
 
-// }
-ReactDOM.render(<App />, document.getElementById("root"));
+}
+//ReactDOM.render(<App />, document.getElementById("root"));
 
 }
 
